@@ -1,0 +1,8 @@
+{
+    "require": {
+        "guzzlehttp/guzzle": "^7.5",
+        "php-tui/php-tui": "^0.2.1",
+        "php-tui/term": "^0.3.4",
+        "symfony/yaml": "^7.2"
+    }
+}

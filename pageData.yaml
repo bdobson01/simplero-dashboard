@@ -1,0 +1,155 @@
+-
+    title: 'Membership Income by month'
+    queries: { 
+        overall: [
+            { 
+                text: 'Average Total', 
+                result: averageTotal, 
+                query: 'SELECT ROUND(AVG(total),2) AS averageTotal FROM 
+                    (SELECT i.email,SUM(i.amount) AS total FROM invoices AS i 
+                    INNER JOIN products AS p  ON i.product_id = p.product_id
+                    WHERE p.name="Sisterhood of Wisdom and Wonder" GROUP BY email);' 
+            }, 
+            { 
+                text: 'Max Total', 
+                result: maxTotal, 
+                query: 'SELECT ROUND(MAX(total),2) AS maxTotal FROM (SELECT i.email,SUM(i.amount) AS total  FROM invoices AS i INNER JOIN products AS p  ON i.product_id = p.product_id  WHERE p.name="Sisterhood of Wisdom and Wonder" GROUP BY email);' 
+            }], 
+            graphData: 
+            {
+                text: 'Sisterhood income per Month', 
+                result: monthlyTotal, 
+                startYearQuery: "SELECT STRFTIME('%Y',time) AS startYear FROM invoices ASC LIMIT 1;", 
+                startYearResult: startYear, 
+                query: "SELECT ROUND(SUM(total),2) AS monthlyTotal FROM 
+                    (SELECT i.email,SUM(i.amount) AS total FROM invoices AS i 
+                    INNER JOIN products AS p  ON i.product_id = p.product_id 
+                    WHERE p.name=\"Sisterhood of Wisdom and Wonder\" AND 
+                    STRFTIME('%%m',time)='%s' AND STRFTIME('%%Y',time)='%s' GROUP BY email);"
+            } 
+        }
+-
+    title: 'Membership Subscribers by month'
+    queries: { 
+        overall: [
+            { 
+                text: 'Average Count', 
+                result: averageCount, 
+                query: 'SELECT ROUND(AVG(total),2) AS averageCount FROM (SELECT i.email,COUNT(i.amount) AS total  FROM invoices AS i INNER JOIN products AS p  ON i.product_id = p.product_id  WHERE p.name="Sisterhood of Wisdom and Wonder" GROUP BY email);' 
+            }, 
+            { 
+                text: 'Max Count', 
+                result: maxCount, 
+                query: 'SELECT ROUND(MAX(total),2) AS maxCount FROM (SELECT i.email,COUNT(i.amount) AS total  FROM invoices AS i INNER JOIN products AS p  ON i.product_id = p.product_id  WHERE p.name="Sisterhood of Wisdom and Wonder" GROUP BY email);' 
+            }], 
+        graphData: 
+        { 
+            text: 'Subscribers per Month', 
+            result: subCount, 
+            startYearQuery: "SELECT STRFTIME('%Y',time) AS startYear FROM invoices ASC LIMIT 1;", 
+            startYearResult: startYear, 
+            query: "SELECT COUNT(*) AS subCount FROM (SELECT i.email  FROM invoices AS i INNER JOIN products AS p  ON i.product_id = p.product_id  WHERE p.name=\"Sisterhood of Wisdom and Wonder\" AND  STRFTIME('%%m',time)='%s' AND STRFTIME('%%Y',time)='%s'  GROUP BY email);" 
+        }
+    }
+-
+    title: 'Simplero Overall Income by month'
+    queries: { 
+        overall: [{ 
+                text: '2023 Total', 
+                result: total2023, 
+                query: "SELECT ROUND(SUM(amount),2) AS total2023 FROM invoices  WHERE STRFTIME('%Y',time)='2023';" 
+            }, 
+            { 
+                text: '2024 Total', 
+                result: total2024, 
+                query: "SELECT ROUND(SUM(amount),2) AS total2024 FROM invoices  WHERE STRFTIME('%Y',time)='2024';" 
+            }, 
+            { 
+                text: '2025 Total', 
+                result: total2025, 
+                query: "SELECT ROUND(SUM(amount),2) AS total2025 FROM invoices  WHERE STRFTIME('%Y',time)='2025';" 
+            }], 
+        graphData: { 
+            text: 'Income per Month', 
+            result: monthlyTotal, 
+            startYearQuery: "SELECT STRFTIME('%Y',time) AS startYear FROM invoices ASC LIMIT 1;", 
+            startYearResult: startYear, 
+            query: "SELECT ROUND(SUM(amount),2) AS monthlyTotal FROM invoices  WHERE STRFTIME('%%m',time)='%s' AND STRFTIME('%%Y',time)='%s';" 
+        } 
+    }
+-
+    title: 'Simplero Category:Retreat Income'
+    queries: { 
+        overall: [{ 
+                text: '2025 Total', 
+                result: total2025, 
+                query: "SELECT ROUND(SUM(total),2) AS total2025 FROM (SELECT i.email,SUM(i.amount) AS total  FROM invoices AS i INNER JOIN products AS p  ON i.product_id = p.product_id  WHERE p.category=\"Retreats\" AND STRFTIME('%Y',time)='2025' GROUP BY email);" 
+            }, { 
+                text: '2025 Total Tickets', 
+                result: total2025, 
+                query: "SELECT COUNT(*) AS total2025 FROM (SELECT i.email AS total  FROM invoices AS i INNER JOIN products AS p  ON i.product_id = p.product_id  WHERE p.category=\"Retreats\" AND STRFTIME('%Y',time)='2025' GROUP BY email);" 
+            }, { 
+                text: '2024 Total', 
+                result: total2024, 
+                query: "SELECT ROUND(SUM(total),2) AS total2024 FROM (SELECT i.email,SUM(i.amount) AS total  FROM invoices AS i INNER JOIN products AS p  ON i.product_id = p.product_id  WHERE p.category=\"Retreats\" AND STRFTIME('%Y',time)='2024' GROUP BY email);" 
+            }, { 
+                text: '2024 Total Tickets', 
+                result: total2024, 
+                query: "SELECT COUNT(*) AS total2024 FROM (SELECT i.email AS total  FROM invoices AS i INNER JOIN products AS p  ON i.product_id = p.product_id  WHERE p.category=\"Retreats\" AND STRFTIME('%Y',time)='2024' GROUP BY email);" 
+            }], 
+        graphData: { 
+            text: 'Retreat Income per Month', 
+            result: monthlyTotal, 
+            startYearQuery: "SELECT STRFTIME('%Y',time) AS startYear FROM invoices ASC LIMIT 1;", 
+            startYearResult: startYear, 
+            query: "SELECT ROUND(SUM(total),2) AS monthlyTotal FROM (SELECT i.email,SUM(i.amount) AS total FROM invoices AS i INNER JOIN products AS p  ON i.product_id = p.product_id  WHERE p.category=\"Retreats\" AND  STRFTIME('%%m',time)='%s' AND STRFTIME('%%Y',time)='%s'  GROUP BY email);" 
+        } 
+    }
+-
+    title: 'Simplero Category:Course Income'
+    queries: { 
+        overall: [{ 
+                text: '2025 Total', 
+                result: total2025, 
+                query: "SELECT ROUND(SUM(total),2) AS total2025 FROM (SELECT i.email,SUM(i.amount) AS total FROM invoices AS i INNER JOIN products AS p ON i.product_id = p.product_id  WHERE p.category=\"Standalone Courses\" AND STRFTIME('%Y',time)='2025' GROUP BY email);" 
+            }, { 
+                text: '2024 Total', 
+                result: total2024, 
+                query: "SELECT ROUND(SUM(total),2) AS total2024 FROM (SELECT i.email,SUM(i.amount) AS total FROM invoices AS i INNER JOIN products AS p  ON i.product_id = p.product_id  WHERE p.category=\"Standalone Courses\" AND STRFTIME('%Y',time)='2024' GROUP BY email);" 
+            }, { 
+                text: '2023 Total', 
+                result: total2023, 
+                query: "SELECT ROUND(SUM(total),2) AS total2023 FROM (SELECT i.email,SUM(i.amount) AS total FROM invoices AS i INNER JOIN products AS p  ON i.product_id = p.product_id  WHERE p.category=\"Standalone Courses\" AND STRFTIME('%Y',time)='2023' GROUP BY email);" 
+            }], 
+        graphData: { 
+            text: 'Course Income per Month', 
+            result: monthlyTotal, 
+            startYearQuery: "SELECT STRFTIME('%Y',time) AS startYear FROM invoices ASC LIMIT 1;", 
+            startYearResult: startYear, 
+            query: "SELECT ROUND(SUM(total),2) AS monthlyTotal FROM (SELECT i.email,SUM(i.amount) AS total FROM invoices AS i INNER JOIN products AS p  ON i.product_id = p.product_id  WHERE p.category=\"Standalone Courses\" AND  STRFTIME('%%m',time)='%s' AND STRFTIME('%%Y',time)='%s'  GROUP BY email);" 
+        } 
+    }
+-
+    title: 'Simplero Category:Downloadable Income'
+    queries: { 
+        overall: [{ 
+                text: '2025 Total', 
+                result: total2025, 
+                query: "SELECT ROUND(SUM(total),2) AS total2025 FROM (SELECT i.email,SUM(i.amount) AS total FROM invoices AS i INNER JOIN products AS p ON i.product_id = p.product_id  WHERE p.category=\"Downloadables\" AND STRFTIME('%Y',time)='2025' GROUP BY email);" 
+            }, { 
+                text: '2024 Total', 
+                result: total2024, 
+                query: "SELECT ROUND(SUM(total),2) AS total2024 FROM (SELECT i.email,SUM(i.amount) AS total FROM invoices AS i INNER JOIN products AS p  ON i.product_id = p.product_id  WHERE p.category=\"Downloadables\" AND STRFTIME('%Y',time)='2024' GROUP BY email);" 
+            }, { 
+                text: '2023 Total', 
+                result: total2023, 
+                query: "SELECT ROUND(SUM(total),2) AS total2023 FROM (SELECT i.email,SUM(i.amount) AS total FROM invoices AS i INNER JOIN products AS p  ON i.product_id = p.product_id  WHERE p.category=\"Downloadables\" AND STRFTIME('%Y',time)='2023' GROUP BY email);" 
+            }], 
+        graphData: { 
+            text: 'Downloadables Income per Month', 
+            result: monthlyTotal, 
+            startYearQuery: "SELECT STRFTIME('%Y',time) AS startYear FROM invoices ASC LIMIT 1;", 
+            startYearResult: startYear, 
+            query: "SELECT ROUND(SUM(total),2) AS monthlyTotal FROM (SELECT i.email,SUM(i.amount) AS total FROM invoices AS i INNER JOIN products AS p  ON i.product_id = p.product_id  WHERE p.category=\"Downloadables\" AND  STRFTIME('%%m',time)='%s' AND STRFTIME('%%Y',time)='%s'  GROUP BY email);" 
+        } 
+    }
